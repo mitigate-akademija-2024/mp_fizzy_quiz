@@ -33,21 +33,25 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_11_161841) do
   create_table "quiz_comments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.integer "quiz_id", null: false
     t.integer "quiz_comment_id"
     t.string "text"
     t.index ["quiz_comment_id"], name: "index_quiz_comments_on_quiz_comment_id"
     t.index ["quiz_id"], name: "index_quiz_comments_on_quiz_id"
+    t.index ["user_id"], name: "index_quiz_comments_on_user_id"
   end
 
   create_table "quiz_shareds", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "quiz_id", null: false
+    t.integer "user_id", null: false
     t.string "uuid", null: false
     t.integer "count"
     t.integer "share_type"
     t.index ["quiz_id"], name: "index_quiz_shareds_on_quiz_id"
+    t.index ["user_id"], name: "index_quiz_shareds_on_user_id"
   end
 
   create_table "quizzes", force: :cascade do |t|
@@ -87,7 +91,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_11_161841) do
   add_foreign_key "questions", "quizzes"
   add_foreign_key "quiz_comments", "quiz_comments"
   add_foreign_key "quiz_comments", "quizzes"
+  add_foreign_key "quiz_comments", "users"
   add_foreign_key "quiz_shareds", "quizzes"
+  add_foreign_key "quiz_shareds", "users"
   add_foreign_key "quizzes", "users"
   add_foreign_key "user_answers", "answers"
   add_foreign_key "user_answers", "users"
