@@ -1,0 +1,2 @@
+class QuizShared < ApplicationRecord
+end
