@@ -1,9 +1,15 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: [:edit, :destroy, :update, :create, :new]
 
   # GET /quizzes or /quizzes.json
   def index
-    @quizzes = Quiz.all
+    if params[:user_id]
+      @quizzes = Quiz.all.where(:user_id => params[:user_id])
+    else
+      @quizzes = Quiz.all
+    end
+
   end
 
   # GET /quizzes/1 or /quizzes/1.json
@@ -22,7 +28,7 @@ class QuizzesController < ApplicationController
   # POST /quizzes or /quizzes.json
   def create
     @quiz = Quiz.new(quiz_params)
-
+    @quiz.user = current_user
     respond_to do |format|
       if @quiz.save
         format.html { redirect_to quiz_url(@quiz), notice: "Quiz was successfully created." }

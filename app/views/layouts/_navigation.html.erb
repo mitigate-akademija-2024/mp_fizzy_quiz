@@ -1,0 +1,18 @@
+<ul class="flex bg-gray-200">
+  
+  <%= link_to "Quizzes",  quizzes_path, class: nav_btn %>
+  <% if current_user %>
+    <%= link_to "My Quizzes",  user_quizzes_path(current_user), class: nav_btn %>
+  <% end %>
+
+  <% if current_user %>
+
+    <%= link_to "My Profile",  edit_user_registration_path, class: nav_btn %>
+    <%= button_to "Log out", destroy_user_session_path, method: :delete, class: nav_btn %>
+
+  <% else %>
+      <%= link_to "Sign In",  user_session_path, class: nav_btn %>
+      <%= link_to "Register",  new_user_registration_path, class: nav_btn %>
+  <% end %>
+
+</ul> 
