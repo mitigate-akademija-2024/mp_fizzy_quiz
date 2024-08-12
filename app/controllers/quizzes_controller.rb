@@ -68,6 +68,10 @@ class QuizzesController < ApplicationController
     @scores = @quiz.user_scores.order(correct_count: :desc)
   end
 
+  def user_answers
+    @user_answers = UserAnswer.where(user: current_user)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
