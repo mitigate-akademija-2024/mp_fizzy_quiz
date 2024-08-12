@@ -1,0 +1,12 @@
+<table id="leaderboard" class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+    <thead class="text-left">
+      <tr>
+        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">User</th>
+        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Score</th>
+        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      <%= render partial:'leaderboard_row', collection: @scores, as: :score %>
+    </tbody>
+</table>

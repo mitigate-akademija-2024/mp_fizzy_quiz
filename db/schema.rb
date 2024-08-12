@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_11_161841) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_12_132058) do
   create_table "answers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -70,8 +70,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_11_161841) do
     t.integer "user_id", null: false
     t.integer "answer_id", null: false
     t.string "unique_answer"
+    t.integer "user_score_id"
     t.index ["answer_id"], name: "index_user_answers_on_answer_id"
     t.index ["user_id"], name: "index_user_answers_on_user_id"
+  end
+
+  create_table "user_scores", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.integer "correct_count", null: false
+    t.integer "total_score"
+    t.integer "quiz_id"
+    t.index ["user_id"], name: "index_user_scores_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -96,5 +107,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_11_161841) do
   add_foreign_key "quiz_shareds", "users"
   add_foreign_key "quizzes", "users"
   add_foreign_key "user_answers", "answers"
+  add_foreign_key "user_answers", "user_scores"
   add_foreign_key "user_answers", "users"
+  add_foreign_key "user_scores", "quizzes"
+  add_foreign_key "user_scores", "users"
 end

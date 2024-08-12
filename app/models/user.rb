@@ -6,5 +6,6 @@ class User < ApplicationRecord
   
   has_many :quizzes, dependent: :destroy
   has_many :user_answers, dependent: :destroy
+  has_many :user_scores, dependent: :destroy
   has_many :quiz_comments, dependent: :destroy
 end

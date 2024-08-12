@@ -1,0 +1,20 @@
+<h1><%= @quiz.title %></h1>
+<%= form_with url: quiz_submit_path(@quiz), method: :post, local: true do |f| %>
+
+  <% @questions.each do |question| %>
+    <div class="questions">
+    <h3>Question: <%= question.text %></h3>
+    
+    <% question.answers.each do |answer|%>
+      <div class="answers">
+        <%= f.label "answers[#{question.id}][#{answer.id}]", answer.text %>
+        <% if question.question_type == 0 %>
+          <%= f.radio_button "answers[#{question.id}][#{answer.id}]", answer.correct %>
+        <% end %>
+      </div>
+    <% end %>
+    
+    </div>
+  <% end %>
+  <%= f.submit %>
+<% end %>

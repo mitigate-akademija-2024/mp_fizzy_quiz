@@ -63,6 +63,11 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def leaderboard
+    @quiz = Quiz.find(params[:quiz_id])
+    @scores = @quiz.user_scores.order(correct_count: :desc)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz

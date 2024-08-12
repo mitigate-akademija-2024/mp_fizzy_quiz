@@ -5,5 +5,6 @@ class Quiz < ApplicationRecord
 
   has_many :questions, dependent: :destroy
   has_many :quiz_comments, dependent: :destroy
+  has_many :user_scores, dependent: :destroy
   has_one :quiz_shared, dependent: :destroy
 end
