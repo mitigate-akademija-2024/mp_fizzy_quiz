@@ -3,6 +3,8 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application"
+import RailsNestedForm from '@stimulus-components/rails-nested-form'
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+application.register('nested-form', RailsNestedForm)

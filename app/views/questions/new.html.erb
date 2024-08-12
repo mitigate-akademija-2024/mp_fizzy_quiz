@@ -1,0 +1,10 @@
+<h1><%= @quiz.title %></h1>
+<h2>New question</h2>
+
+<%= render 'form', question: @question %>
+
+<a class="btn">Pievienot Atbildi</a>
+
+<div class = "mt-6">
+    <%= link_to "Back to Quiz", @quiz %>
+</div>

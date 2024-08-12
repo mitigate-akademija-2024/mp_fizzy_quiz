@@ -10,8 +10,12 @@ Rails.application.routes.draw do
     get 'sign_out', to: 'devise/sessions#destroy'
   end
 
+  resources :quizzes do
+    resources :questions, shallow: true
+  end
+
   resources :user do
-    resources :quizzes
+    resources :quizzes, shallow: true
   end
 
 

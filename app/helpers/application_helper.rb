@@ -7,5 +7,9 @@ module ApplicationHelper
     def nav_btn_dissabled
         'mr-6 text-gray-400 cursor-not-allowed'
     end
+    
+    def format_date(date)
+        date.strftime("%F")
+    end
 
 end

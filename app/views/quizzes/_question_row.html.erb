@@ -1,0 +1,14 @@
+<tr>
+  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= question.id %></td>
+  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= question.text %></td>
+  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= format_date question.created_at %></td>
+  <td><%= button_to "Destroy",  question_path(question), method: :destroy, data: {turbo_confirm: "Tiesam?"} %></td>
+  <td><%= link_to "Edit",   edit_question_path(question), method: :edit %></td>
+</tr>
+<% question.answers.each do |answer| %>
+    <tr class="bg-slate-300">
+    <td></td>
+    <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= answer.text %></td>
+    <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= format_date answer.created_at %></td>
+    </tr>
+<% end %>
