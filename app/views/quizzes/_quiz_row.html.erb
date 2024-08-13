@@ -9,8 +9,8 @@
 <% else %>
   <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= link_to("View", quiz, class: basic_btn) %></td>
   <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= link_to("Start", quiz_start_path(quiz), class: basic_btn) %></td>
-  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= link_to("Leaderboard",  quiz_leaderboard_path(quiz), class: basic_btn) %></td>
 <% end %>
+  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= link_to("Leaderboard",  quiz_leaderboard_path(quiz), class: basic_btn) %></td>
 <% if (quiz.user == current_user )%>
   <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= link_to("Edit", edit_quiz_path(quiz), class: basic_btn) %></td>
   <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-700"><%= button_to "Destroy this quiz", quiz, method: :delete, class: basic_btn %></td>

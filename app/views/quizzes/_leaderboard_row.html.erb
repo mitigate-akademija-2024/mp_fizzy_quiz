@@ -1,6 +1,10 @@
 
 <tr>
-  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= score.user.email %></th>
+  <% if current_user != score.user %>
+    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= score.user.username ? score.user.username : "Anonymous User" %></th>
+  <% else %>
+    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><strong>You</strong></th>
+  <% end %>
   <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= score.correct_count %></th>
   <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= format_date score.created_at %></th>
 </tr>

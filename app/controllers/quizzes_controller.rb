@@ -66,6 +66,12 @@ class QuizzesController < ApplicationController
   def leaderboard
     @quiz = Quiz.find(params[:quiz_id])
     @scores = @quiz.user_scores.order(correct_count: :desc)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data leaderboard_csv(@scores), filename: "quiz-#{Date.today}.csv"}
+    end
+
   end
 
   def user_answers
@@ -73,6 +79,27 @@ class QuizzesController < ApplicationController
   end
 
   private
+
+    def leaderboard_csv(scores)
+      require 'csv'
+      filtered = []
+      scores.each do |score|
+        filtered.append(
+          username: score.user.username ? score.user.username : "Anonymous User",
+          correct_count: score.correct_count,
+          date: score.created_at.strftime('%F')
+          )
+      end
+      attributes = %w{username correct_count date}
+      CSV.generate(headers: true) do |csv|
+        csv << attributes
+
+        filtered.each do |score|
+          csv << score.values
+        end
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
       @quiz = Quiz.find(params[:id])
