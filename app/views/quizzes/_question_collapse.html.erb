@@ -1,0 +1,7 @@
+<div class="collapse-content">
+  <p><%= question.text%></p>
+  <div class="flex">
+    <%= button_to "Delete",  question_path(question), method: :destroy, data: {turbo_confirm: "Tiesam?"}, class: "btn btn-sm btn-outline btn-error" %>
+    <%= link_to "Edit",   edit_question_path(question), method: :edit, class: "btn btn-sm btn-outline btn-success" %>
+  </div>
+</div>

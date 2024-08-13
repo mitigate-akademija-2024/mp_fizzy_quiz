@@ -1,18 +1,38 @@
-<ul class="flex bg-gray-200">
+<div class="navbar bg-base-100 bg-slate-50 mb-5">
   
-  <%= link_to "Quizzes",  quizzes_path, class: nav_btn %>
-  <% if current_user %>
-    <%= link_to "My Quizzes",  user_quizzes_path(current_user), class: nav_btn %>
-  <% end %>
+  <div class="flex-1">
+    <%= link_to "All Quizzes",  quizzes_path, class: "btn btn-ghost text-xl" %>
+    <a class="btn btn-ghost text-xl">Global Leaderboard</a>
+    <% unless current_user%>
+      <%= link_to "Create a Quiz", new_quiz_path, class: "btn btn-ghost text-xl", disabled: "disabled" %>
+    <% else %>
+      <%= link_to "Create a Quiz", new_quiz_path, class: "btn btn-ghost text-xl"%>
+    <% end %>
 
-  <% if current_user %>
+  </div>
 
-    <%= link_to "My Profile",  edit_user_registration_path, class: nav_btn %>
-    <%= button_to "Log out", destroy_user_session_path, method: :delete, class: nav_btn %>
-
-  <% else %>
-      <%= link_to "Sign In",  user_session_path, class: nav_btn %>
-      <%= link_to "Register",  new_user_registration_path, class: nav_btn %>
-  <% end %>
-
-</ul> 
+  <div class="flex-none">
+    <div class="dropdown dropdown-end">
+      
+      <% if current_user %>
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full">
+            <%= image_tag("default_user.webp", :alt => "Profile Picture") %>
+          </div>
+        </div>
+        <ul
+          tabindex="0"
+          class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+          <li><%= link_to "My Profile",  edit_user_registration_path %></li>
+          <li><%= link_to "Settings" %></li>
+          <li><%= button_to "Log out", destroy_user_session_path, method: :delete %></li>
+        </ul>
+      <% else %>
+        <div class="flex-1">
+          <%= link_to "Register", new_user_registration_path, class: "btn btn-ghost text-l" %>
+          <%= link_to"Log In", user_session_path, class: "btn btn-ghost text-l" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="card card-normal bg-base-100 shadow-xl w-96 m-3">
+  <div class="card-body">
+
+    <h2 class="card-title"><%= quiz.title %></h2>
+    
+    <p><%= quiz.description_preview %></p>
+    <p>Made by <%= quiz.user.username ? quiz.user.username : "Annonymous" %></p>
+
+    <div class="card-actions justify-between">
+      <%= link_to("View", quiz, class: "btn btn-sm") %>
+      
+      <% unless current_user%>
+        <%= link_to("Start", quiz_start_path(quiz), class: "btn btn-sm", disabled: "disabled") %>
+      <% else %>
+        <%= link_to("Start", quiz_start_path(quiz), class: "btn btn-sm") %>
+      <% end %>
+
+      <%= link_to("Leaderboard",  quiz_leaderboard_path(quiz), class: "btn btn-sm") %>
+      <% if current_user == quiz.user%>
+        <button class="btn btn-sm">Edit</button>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
