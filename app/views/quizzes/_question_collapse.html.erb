@@ -1,7 +1,29 @@
-<div class="collapse-content">
-  <p><%= question.text%></p>
-  <div class="flex">
-    <%= button_to "Delete",  question_path(question), method: :destroy, data: {turbo_confirm: "Tiesam?"}, class: "btn btn-sm btn-outline btn-error" %>
-    <%= link_to "Edit",   edit_question_path(question), method: :edit, class: "btn btn-sm btn-outline btn-success" %>
-  </div>
+<div tabindex="0" class="collapse-content mb-2 p-4 rounded-lg bg-slate-100">
+    <details class="collapse collapse-arrow">
+      <summary class="collapse-title">
+        <div class="flex justify-between text-xl font-bold">
+          <p><%= question.text%></p>
+          <div class="flex">
+            <%= button_to "Delete",  question_path(question), method: :destroy, data: {turbo_confirm: "Tiesam?"}, class: "btn btn-sm btn-outline btn-error" %>
+            <%= link_to "Edit",   edit_question_path(question), method: :edit, class: "btn btn-sm btn-outline btn-success" %>
+          </div>
+        </div>
+        <p class="italic">Question type: <%= question.question_type %></p>
+      </summary>
+      
+      <% question.answers.each_with_index do |answer, index|%>
+        <div class="px-4 flex">
+          <p class="w-1/3"><%= index+1%>. <%= answer.text%></p>
+          <div class="px-2">
+            <% if answer.correct %>
+              <input type="checkbox" class="checkbox" disabled checked="checked" />
+            <% else %>
+              <input type="checkbox" class="checkbox" disabled />
+            <% end %>
+          </div>
+          <p>Score: <%= answer.score ? answer.score : "Not set" %></p>
+        </div>
+      <% end %>
+    
+    </details>
 </div>
