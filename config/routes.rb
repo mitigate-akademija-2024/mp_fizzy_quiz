@@ -12,16 +12,14 @@ Rails.application.routes.draw do
 
   resources :quizzes do
     resources :questions, shallow: true
+    resources :quiz_comments, only: [:create]
+    get 'start', to: 'quiz_scores#start'
+    post 'submit', to: 'quiz_scores#submit'
+    get 'leaderboard', to: 'quizzes#leaderboard'
   end
 
   resources :user do
     resources :quizzes, shallow: true
-  end
-
-  resources :quizzes do
-    get 'start', to: 'quiz_scores#start'
-    post 'submit', to: 'quiz_scores#submit'
-    get 'leaderboard', to: 'quizzes#leaderboard'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

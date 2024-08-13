@@ -1,0 +1,2 @@
+module QuizCommentsHelper
+end

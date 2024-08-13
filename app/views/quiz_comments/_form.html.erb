@@ -1,0 +1,12 @@
+<%= form_with(model: [quiz, QuizComment.new], local: true) do |form| %>
+  <%= form.hidden_field :quiz_comment_id, value: quiz_comment_id %>
+
+  <div class="field">
+    <%= form.label :text, "Your Comment" %><br>
+    <%= form.text_area :text, rows: 3 %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit quiz_comment_id.present? ? 'Reply' : 'Post Comment' %>
+  </div>
+<% end %>
