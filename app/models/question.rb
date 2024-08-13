@@ -7,6 +7,6 @@ class Question < ApplicationRecord
     
     accepts_nested_attributes_for :answers, allow_destroy: true
 
-    enum question_type: [ :multiple_choice, :single_choice]
+    enum question_type: [ :multiple_choice, :single_choice, :open_question ]
 
 end

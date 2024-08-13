@@ -1,11 +1,7 @@
 <% content_for :title, "New quiz" %>
-
-<h1>New quiz</h1>
-
-<%= render "form", quiz: @quiz %>
-
-<br>
-
-<div>
-  <%= link_to "Back to quizzes", quizzes_path %>
+<div class="card card-normal bg-base-100 shadow-xl w-1/3 mx-auto">
+    <div class="card-title mx-auto text-2xl">
+        <p>New Quiz</p>
+    </div>
+    <%= render "form", quiz: @quiz %>
 </div>

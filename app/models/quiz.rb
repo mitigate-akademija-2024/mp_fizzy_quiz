@@ -8,6 +8,8 @@ class Quiz < ApplicationRecord
   has_many :user_scores, dependent: :destroy
   has_one :quiz_shared, dependent: :destroy
 
+  enum quiz_type: [ :private_quiz, :public_quiz, :restricted_quiz ]
+
   def description_preview
     self.description.length > 30 ? "#{ self.description[0...27] }..." : self.description
   end
@@ -17,11 +19,17 @@ class Quiz < ApplicationRecord
   end
 
   def max_correct_answers
-    user_scores.order(correct_count: :desc).first.correct_count
+    ordered = user_scores.order(correct_count: :desc).first
+    if ordered
+      user_scores.order(correct_count: :desc).first.correct_count
+    end
   end
 
   def max_score
-    user_scores.order(total_score: :desc).first.total_score
+    ordered = user_scores.order(correct_count: :desc).first
+    if ordered
+      user_scores.order(total_score: :desc).first.total_score
+    end
   end
 
 end

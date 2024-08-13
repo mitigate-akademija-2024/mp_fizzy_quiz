@@ -1,20 +1,22 @@
-<%= form_with(model: quiz) do |form| %>
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
+<div class="card-body">
+  <%= form_with(model: quiz) do |form| %>
+      
+    <label class="input input-bordered flex items-center gap-2" for=<%= :title %> >
+      Title
+      <%= form.text_field :title, class: "grow", placeholder: "My Quiz Title" %>
+    </label>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
-  </div>
+    <label class="input input-bordered flex items-center gap-2 my-2" for=<%= :description %> >
+      Description
+      <%= form.text_field :description,  class: "grow", placeholder: "My Quiz Title" %>
+    </label>
 
-  <div>
-    <%= form.label :type, style: "display: block" %>
-    <%= form.number_field :quiz_type %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <%= form.select :quiz_type, 
+      options_for_select(Quiz.quiz_types.keys.map { |type, value| [type.humanize, value] }, @quiz.quiz_type_before_type_cast), {}, 
+      class: "select select-bordered w-full max-w-xs" %>
+      
+    <div class="mt-4">
+      <%= form.submit class: "btn btn-wide w-full"%>
+    </div>
+  <% end %>    
+</div>
