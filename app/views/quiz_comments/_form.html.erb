@@ -1,12 +1,14 @@
 <%= form_with(model: [quiz, QuizComment.new], local: true) do |form| %>
-  <%= form.hidden_field :quiz_comment_id, value: quiz_comment_id %>
+    <%= form.hidden_field :quiz_comment_id, value: quiz_comment_id %>
+    
+    <label class="form-control w-full max-w-xs">
 
-  <div class="field">
-    <%= form.label :text, "Your Comment" %><br>
-    <%= form.text_area :text, rows: 3 %>
-  </div>
+        <%= form.text_area :text, rows: 2, placeholder: "Type here", class: "input input-bordered w-full max-w-xs"%>
 
-  <div class="actions">
-    <%= form.submit quiz_comment_id.present? ? 'Reply' : 'Post Comment' %>
-  </div>
+        <div class="label">
+            <span class="label-text-alt"><%= form.submit quiz_comment_id.present? ? 'Reply' : 'Post Comment', class: "btn btn-xs"%></span>
+            <span class="label-text-alt"></span>
+        </div>
+    </label>
+  
 <% end %>

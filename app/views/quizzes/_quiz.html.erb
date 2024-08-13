@@ -39,12 +39,11 @@
   </div>
 <% end %>
 
-<div class="new-comment">
-  <h3>Leave a Comment</h3>
+<div class="card card-normal bg-base-100 shadow-xl w-1/3 mx-auto mt-4 px-4 pt-4">
+  
+  <p class="card-title px-4">Leave a Comment</p>
   <%= render 'quiz_comments/form', quiz: @quiz, quiz_comment_id: nil %>
-</div>
 
-<div class="card card-normal bg-base-100 shadow-xl w-1/3 mx-auto mt-4">
   <details class="collapse collapse-arrow" open="open">
     <summary class="collapse-title text-xl font-medium">Comments</summary>
     <%= render partial: 'quiz_comments/comment', collection: @quiz.quiz_comments.where(quiz_comment_id: nil), as: :quiz_comment, locals: { level: 0 } %>

@@ -1,5 +1,5 @@
 <div class="quiz-comment mb-2 px-2" style="margin-left: <%= level * 20 %>px;">
-    <p><strong><%= quiz_comment.user.username ? quiz_comment.user.username : "Annonymous" %>:</strong></p>
+    <p><strong><%= quiz_comment.user.username ? quiz_comment.user.username : "Annonymous#{quiz_comment.user.id}" %>:</strong></p>
     <p><%= quiz_comment.text %></p>
   
     <div class="reply">
