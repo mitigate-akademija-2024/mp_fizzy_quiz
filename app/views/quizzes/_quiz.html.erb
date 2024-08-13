@@ -41,11 +41,24 @@
 
 <div class="card card-normal bg-base-100 shadow-xl w-1/3 mx-auto mt-4 px-4 pt-4">
   
-  <p class="card-title px-4">Leave a Comment</p>
-  <%= render 'quiz_comments/form', quiz: @quiz, quiz_comment_id: nil %>
+
 
   <details class="collapse collapse-arrow" open="open">
-    <summary class="collapse-title text-xl font-medium">Comments</summary>
+    <summary class="collapse-title text-xl font-medium">Leave a Comment</summary>
+    <%= render 'quiz_comments/form', quiz: @quiz, quiz_comment_id: nil %>
     <%= render partial: 'quiz_comments/comment', collection: @quiz.quiz_comments.where(quiz_comment_id: nil), as: :quiz_comment, locals: { level: 0 } %>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          document.addEventListener('click', function(e) {
+            if (e.target && e.target.matches('.reply-link')) {
+              e.preventDefault();
+              var replyForm = document.getElementById(e.target.dataset.toggle);
+              replyForm.style.display = replyForm.style.display === 'none' || replyForm.style.display === '' ? 'block' : 'none';
+            }
+          });
+        });
+    </script>
+
   </details>
 </div>

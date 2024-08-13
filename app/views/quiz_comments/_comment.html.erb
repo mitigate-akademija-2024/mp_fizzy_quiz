@@ -1,10 +1,13 @@
 <div class="quiz-comment mb-2 px-2" style="margin-left: <%= level * 20 %>px;">
-    <p><strong><%= quiz_comment.user.username ? quiz_comment.user.username : "Annonymous#{quiz_comment.user.id}" %>:</strong></p>
-    <p><%= quiz_comment.text %></p>
-  
-    <div class="reply">
-        <%= link_to 'Reply', '#', class: 'reply-link', data: { toggle: "reply-form-#{quiz_comment.id}" } %>
-
+    
+    <div class="">
+        <div class="flex">
+            <p><strong><%= quiz_comment.user.username ? quiz_comment.user.username : "Annonymous#{quiz_comment.user.id}" %>:</strong></p>
+            <p><%= quiz_comment.text %></p>
+        </div>
+        <%= link_to 'Reply', '#', class: 'reply-link btn btn-xs', data: { toggle: "reply-form-#{quiz_comment.id}" } %>
+    </div>
+    <div class="replyform">
         <div id="reply-form-<%= quiz_comment.id %>" class="reply-form" style="display: none;">
         <%= render 'quiz_comments/form', quiz: quiz_comment.quiz, quiz_comment_id: quiz_comment.id %>
         </div>
@@ -16,14 +19,3 @@
     </div>
   <% end %>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.reply-link').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById(e.target.dataset.toggle).style.display = 'block';
-            });
-        });
-    });
-</script>

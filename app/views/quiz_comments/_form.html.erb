@@ -6,7 +6,7 @@
         <%= form.text_area :text, rows: 2, placeholder: "Type here", class: "input input-bordered w-full max-w-xs"%>
 
         <div class="label">
-            <span class="label-text-alt"><%= form.submit quiz_comment_id.present? ? 'Reply' : 'Post Comment', class: "btn btn-xs"%></span>
+            <span class="label-text-alt"><%= form.submit quiz_comment_id.present? ? 'Post Reply' : 'Post Comment', class: "btn btn-xs"%></span>
             <span class="label-text-alt"></span>
         </div>
     </label>
