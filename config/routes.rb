@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :questions, shallow: true
     resources :quiz_comments, only: [:create]
     get 'start', to: 'quiz_scores#start'
+    get 'show', to: 'quiz_scores#show'
     post 'submit', to: 'quiz_scores#submit'
     get 'leaderboard', to: 'quizzes#leaderboard'
   end

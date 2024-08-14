@@ -1,10 +1,14 @@
 class QuizScoresController < ApplicationController
     before_action :authenticate_user!
-    before_action :finished_quiz?
+    before_action :set_quiz
+    before_action :finished_quiz?, only: [:submit, :start]
     
     def start
-        @quiz = Quiz.find(params[:quiz_id])
         @questions = @quiz.questions
+    end
+
+    def show
+        @user_score = @quiz.user_scores.where(:user_id => current_user.id).first
     end
 
     def submit
@@ -32,13 +36,17 @@ class QuizScoresController < ApplicationController
     
     protected
 
+    def set_quiz
+        @quiz = Quiz.find(params[:quiz_id])
+    end
+
     def answer_params
         params.require(:answers)
     end
 
     def finished_quiz?
         if UserScore.where(user: current_user, quiz: params[:quiz_id]).first
-            redirect_to root_path, alert: "You have allready completed the Quiz!"
+            redirect_to quiz_show_path, alert: "You have allready completed the Quiz!"
         end
     end
 

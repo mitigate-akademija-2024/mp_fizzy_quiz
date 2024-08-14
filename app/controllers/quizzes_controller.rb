@@ -6,10 +6,12 @@ class QuizzesController < ApplicationController
 
   # GET /quizzes or /quizzes.json
   def index
+    puts "Index"
     if params[:user_id]
       @quizzes = Quiz.all.where(:user_id => params[:user_id])
     else
-      @quizzes = Quiz.all.where(quiz_type: :public, published_type: :published)
+      @quizzes = Quiz.all.where(quiz_type: :public_quiz, published_type: :published)
+      puts @quizzes
     end
 
   end
@@ -104,7 +106,7 @@ class QuizzesController < ApplicationController
     end
 
     def user_scores_exist?
-      if @quiz.user_scores_exist
+      if @quiz.user_scores.all.first
         redirect_to quizzes_url, error: "Quiz has allready been completed!"
       end
     end

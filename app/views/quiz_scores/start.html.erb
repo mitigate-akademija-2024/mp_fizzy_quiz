@@ -1,20 +1,37 @@
-<h1><%= @quiz.title %></h1>
-<%= form_with url: quiz_submit_path(@quiz), method: :post, local: true do |f| %>
+<div class="card card-normal w-1/2 mx-auto shadow-xl">
 
-  <% @questions.each do |question| %>
-    <div class="questions">
-    <h3>Question: <%= question.text %></h3>
-    
-    <% question.answers.each do |answer|%>
-      <div class="answers">
-        <%= f.label "answers[#{question.id}][#{answer.id}]", answer.text %>
-        <% if question.question_type == 0 %>
-          <%= f.radio_button "answers[#{question.id}][#{answer.id}]", answer.correct %>
-        <% end %>
+  <h2 class="card-title mx-auto"><%= @quiz.title %></h2>
+  <p class="mx-auto">Made by <em><%= @quiz.user.username ? @quiz.user.username : "Annonymous" %></em></p>
+  
+  <div class="card-body">
+
+    <%= form_with model: @question, url: quiz_submit_path(@quiz), method: :post, local: true do |form| %>
+
+      <% @questions.each do |question| %>
+        <div class="card-body shadow-xl">
+          <p>Question: <strong><%=question.text %></strong></p>
+          <% question.answers.each do |answer|%>
+            <div class="answers">
+              <%= form.label "answers[#{question.id}][#{answer.id}]", answer.text %>
+              <% case question.question_type%>
+              <% when :multiple_choice %>
+                <%= form.check_box "answers[#{question.id}][#{answer.id}]" %>
+              <% when :single_choice %>
+                <%= form.radio_button "answers[#{question.id}][#{answer.id}]" %>
+              <% when :true_false %>
+                <p>Lmaoooo ripakss</p>
+              <% else %>
+                <%= form.check_box "answers[#{question.id}][#{answer.id}]" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <%= form.submit%>
+      
       </div>
     <% end %>
-    
-    </div>
-  <% end %>
-  <%= f.submit %>
-<% end %>
+   
+  </div>
+</div>
+

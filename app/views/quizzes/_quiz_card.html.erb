@@ -15,10 +15,12 @@
     <div class="card-actions justify-between">
       <%= link_to("View", quiz, class: "btn btn-sm") %>
       
-      <% unless current_user%>
-        <%= link_to("Start", quiz_start_path(quiz), class: "btn btn-sm", disabled: "disabled") %>
-      <% else %>
-        <%= link_to("Start", quiz_start_path(quiz), class: "btn btn-sm") %>
+      <% if current_user != quiz.user %>
+        <% unless current_user%>
+          <%= link_to("Start", quiz_start_path(quiz), class: "btn btn-sm", disabled: "disabled") %>
+        <% else %>
+          <%= link_to("Start", quiz_start_path(quiz), class: "btn btn-sm") %>
+        <% end %>
       <% end %>
 
       <%= link_to("Leaderboard",  quiz_leaderboard_path(quiz), class: "btn btn-sm") %>

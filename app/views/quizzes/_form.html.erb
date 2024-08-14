@@ -34,11 +34,11 @@
     </label>
 
     <%= form.select :quiz_type, 
-      options_for_select(Quiz.quiz_types.keys.map { |type| [type.humanize, type] }, ), {}, 
+      options_for_select(Quiz.quiz_types.keys.map { |type| [type.humanize, type] }, @quiz.quiz_type), {}, 
       class: "select select-bordered w-full max-w-xs" %>
     
     <%= form.select :published_type, 
-      options_for_select(Quiz.published_types.keys.map { |type| [type.humanize, type] }, ), {}, 
+      options_for_select(Quiz.published_types.keys.map { |type| [type.humanize, type] }, @quiz.published_type), {}, 
       class: "select select-bordered w-full max-w-xs" %>
   
   </div>

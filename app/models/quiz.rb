@@ -9,8 +9,8 @@ class Quiz < ApplicationRecord
 
   accepts_nested_attributes_for :questions, allow_destroy: true
 
-  enum quiz_type: [ :private_quiz, :public_quiz, :restricted_quiz ]
-  enum published_type: [ :unpublished, :published ]
+  enum quiz_type: { private_quiz: 0, public_quiz: 1, restricted_quiz: 2 }
+  enum published_type: { unpublished: 0, published: 1 }
 
   def description_preview
     max = 60
