@@ -13,7 +13,8 @@ class Quiz < ApplicationRecord
   enum quiz_type: [ :private_quiz, :public_quiz, :restricted_quiz ]
 
   def description_preview
-    self.description.length > 30 ? "#{ self.description[0...27] }..." : self.description
+    max = 120
+    self.description.length > max ? "#{ self.description[0...max] }..." : self.description
   end
 
   def completed
