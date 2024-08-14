@@ -1,1 +1,31 @@
-You got <%= @user_score.correct_count%> correct answers! Out of <%= @quiz.questions.count %>!
+<div class="card w-1/2 mx-auto shadow-xl">
+
+    <div class="card-title mx-auto">
+    <p>Results</p>
+    </div>
+
+    <div class="card-body">
+        <p class="font-bold">Quiz: <em><%= @quiz.title %></em></p>
+
+        <p>Correct: <%= @user_score.correct_count %> out of <%= @total_correct%></p>
+          <div class="flex w-2/3 flex-col mx-auto">
+            <div class="divider">Question Breakdown</div>
+         </div>
+        <% @user_answers.each do |question| %>
+            <p class="font-medium">Question: <%= question[:question][:text] %></p>
+            <p><em>Answers:</em></p>
+            <% question[:user_answers].each do |answer| %>
+            <div class="flex w-2/3">
+                <p><%= answer[:text] %></p>
+                <% if answer.correct %>
+                    <div class="badge badge-primary">Correct!</div>
+                <% else %>
+                    <div class="badge badge-secondary">Wrong!</div>
+                <% end %>
+            </div>
+            <% end %>
+        <% end %>
+
+    </div>
+
+</div>
