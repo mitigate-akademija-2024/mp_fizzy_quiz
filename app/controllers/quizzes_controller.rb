@@ -72,27 +72,12 @@ class QuizzesController < ApplicationController
     if params[:quiz_id].present?
       @quiz = Quiz.find(params[:quiz_id])
       @scores = @quiz.user_scores.order(correct_count: :desc)
-    else
-      @aggregate = []
-      User.all.each do |user|
-        @aggregate.append(
-          user: user,
-          total_quizzes: user.user_scores.count,
-          total_correct: UserScore.where(user_id: user.id).sum(:correct_count),
-          last_date: UserScore.where(user_id: user.id).last ? UserScore.where(user_id: user.id).last.created_at : nil )
-      end
     end
   
 
     respond_to do |format|
       format.html
-      format.csv { 
-        if @score
-          send_data leaderboard_csv( @scores ), filename: "quiz-#{Date.today}.csv" 
-        else
-          send_data leaderboard_csv( @aggregate, 1 ), filename: "quiz-#{Date.today}.csv"
-        end
-      }
+      format.csv { send_data leaderboard_csv( @scores ), filename: "quiz-#{Date.today}.csv" }
     end
 
   end
@@ -107,33 +92,22 @@ class QuizzesController < ApplicationController
 
     def user_scores_exist?
       if @quiz.user_scores.all.first
-        redirect_to quizzes_url, error: "Quiz has allready been completed!"
+        redirect_to quiz_url, alert: "Quiz has allready been completed!"
       end
     end
 
-    def leaderboard_csv(scores, flag = 0)
+    def leaderboard_csv(scores)
       require 'csv'
       filtered = []
-      if flag == 0
-        scores.each do |score|
-          filtered.append(
-            username: score.user.username ? score.user.username : "Anonymous User",
-            correct_count: score.correct_count,
-            date: score.created_at
-            )
-        end
-        attributes = %w{username correct_count date}
-      else
-        attributes = %w{username total_quizzes total_correct date}
-        scores.each do |score|
-          filtered.append(
-            username: score[:username] ? score.username : "Anonymous User",
-            total_correct: score[:total_correct],
-            total_quizzes: score[:total_quizzes],
-            date: score[:created_at]
-            )
-        end
+      scores.each do |score|
+        filtered.append(
+          username: score.user.username ? score.user.username : "Anonymous User",
+          correct_count: score.correct_count,
+          date: score.created_at
+          )
       end
+      attributes = %w{username correct_count date}
+      
       
       CSV.generate(headers: true) do |csv|
         csv << attributes

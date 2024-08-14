@@ -8,7 +8,7 @@ class Question < ApplicationRecord
     
     accepts_nested_attributes_for :answers, allow_destroy: true
 
-    enum question_type: [ :multiple_choice, :single_choice, :true_false ]
+    enum question_type: { multiple_choice: 0, single_choice: 1, true_false: 2 }
 
     def has_correct_answer
         answer_values = []

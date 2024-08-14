@@ -7,10 +7,6 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">
-      <% unless @aggregrate %>
-        <%= render partial:'leaderboard_row', collection: @scores, as: :score %>
-      <% else %>
-        <%= render partial:'leaderboard_row', collection: @aggregrate, as: :aggregrate %>
-      <% end %>
+      <%= render partial:'leaderboard_row', collection: @scores, as: :score %>
     </tbody>
 </table>

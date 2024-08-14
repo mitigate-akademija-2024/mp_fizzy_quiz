@@ -7,7 +7,7 @@
     </div>
     
     <%= form.select :question_type, 
-      options_for_select(Question.question_types.keys.map { |type, v| [type.humanize, v] } ), {}, 
+      options_for_select(Question.question_types.keys.map { |type| [type.humanize, type] } ), {}, 
       class: "select select-bordered join-item" %>
   </div>
 
