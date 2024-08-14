@@ -6,6 +6,7 @@
     <% unless current_user%>
       <%= link_to "Create a Quiz", new_quiz_path, class: "btn btn-ghost text-xl", disabled: "disabled" %>
     <% else %>
+      <%= link_to "My Quizzes", user_quizzes_path(current_user), class: "btn btn-ghost text-xl"%>
       <%= link_to "Create a Quiz", new_quiz_path, class: "btn btn-ghost text-xl"%>
     <% end %>
 

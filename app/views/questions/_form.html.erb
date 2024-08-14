@@ -1,35 +1,33 @@
-<%= form_with(model: question.persisted? ? question : [question.quiz, question], data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }) do |form| %>
- <% if question.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(question.errors.count, "error") %> prohibited this quiz from being saved:</h2>
-
-      <ul>
-        <% question.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="mx-auto">
+  <div class="join">
+    <div>
+      <div>
+        <%= form.text_field :text, class: "input input-bordered join-item", placeholder: "How are you?" %>
+      </div>
     </div>
-  <% end %>
+    
+    <%= form.select :question_type, 
+      options_for_select(Question.question_types.keys.map { |type| [type.humanize, type] } ), {}, 
+      class: "select select-bordered join-item" %>
+  </div>
 
-  <template data-nested-form-target="template">
-    <%= form.fields_for :answers, Answer.new, child_index: 'NEW_RECORD' do |ff| %>
-      <%= render "answer_form", form: ff %>
+  <div class="flex w-2/3 flex-col mx-auto">
+    <div class="divider">Answers</div>
+  </div>
+
+  <div class="card-body mt-4" data-controller="nested-form">
+    <template data-nested-form-target="template">
+      <%= form.fields_for :answers, Answer.new, child_index: 'NEW_RECORD' do |ff| %>
+        <%= render "answers/form", form: ff %>
+      <% end %>
+    </template>
+
+    <%= form.fields_for :answers do |ff| %>
+      <%= render "answers/form", form: ff %>
     <% end %>
-  </template>
 
-  <div>
-    <%= form.label :text, style: "display: block" %>
-    <%= form.text_field :text %>
-    <ol>
-        <%= form.fields_for :answers do |ff|%>
-        <%= render 'answer_form', form: ff %>
-        <% end %>
-    </ol>
+
     <div data-nested-form-target="target"></div>
-    <button type="button" data-action="nested-form#add" >Add Answer</button>
+    <button type="button" data-action="nested-form#add">Add Answer</button>
   </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

@@ -43,6 +43,11 @@ class QuestionsController < ApplicationController
         redirect_to quiz_path(@question.quiz), notice: "Question was deleted succsessfully!"
     end
 
+    def answer_fields
+      @question_type = params[:type]
+      render partial: "answers/#{@question_type}", locals: { form: form_builder_instance }
+    end
+
     protected
 
     def set_quiz

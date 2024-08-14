@@ -8,6 +8,8 @@ class Quiz < ApplicationRecord
   has_many :user_scores, dependent: :destroy
   has_one :quiz_shared, dependent: :destroy
 
+  accepts_nested_attributes_for :questions, allow_destroy: true
+
   enum quiz_type: [ :private_quiz, :public_quiz, :restricted_quiz ]
 
   def description_preview

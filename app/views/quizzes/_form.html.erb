@@ -1,6 +1,6 @@
-<div class="card-body">
-  <%= form_with(model: quiz) do |form| %>
-      
+<%= form_with(model: quiz) do |form| %>
+  <div class="card-body">
+    
     <label class="input input-bordered flex items-center gap-2" for=<%= :title %> >
       Title
       <%= form.text_field :title, class: "grow", placeholder: "My Quiz Title" %>
@@ -8,15 +8,35 @@
 
     <label class="input input-bordered flex items-center gap-2 my-2" for=<%= :description %> >
       Description
-      <%= form.text_field :description,  class: "grow", placeholder: "My Quiz Title" %>
+      <%= form.text_field :description,  class: "grow", placeholder: "My Quiz Description" %>
     </label>
 
     <%= form.select :quiz_type, 
-      options_for_select(Quiz.quiz_types.keys.map { |type, value| [type.humanize, value] }, @quiz.quiz_type_before_type_cast), {}, 
+      options_for_select(Quiz.quiz_types.keys.map { |type| [type.humanize, type] }, ), {}, 
       class: "select select-bordered w-full max-w-xs" %>
-      
-    <div class="mt-4">
-      <%= form.submit class: "btn btn-wide w-full"%>
-    </div>
-  <% end %>    
-</div>
+  
+  </div>
+
+  <div class="flex w-2/3 flex-col mx-auto">
+    <div class="divider">Questions</div>
+  </div>
+
+  <div class="card-body mt-4" data-controller="nested-form" data-nested_form_wrapper_selector_value='.nested-form-wrapper'>
+    <template data-nested-form-target="template">
+      <%= form.fields_for :questions, Question.new, child_index: 'NEW_RECORD' do |ff| %>
+        <%= render "questions/form", form: ff %>
+      <% end %>
+    </template>
+
+    <%= form.fields_for :questions do |ff| %>
+      <%= render "questions/form", form: ff %>
+    <% end %>
+
+    <div data-nested-form-target="target"></div>
+    <button type="button" data-action="nested-form#add">Add Question</button>
+  </div>
+
+  <div class="my-4">
+    <%= form.submit class: "btn btn-wide w-full" %>
+  </div>
+<% end %>

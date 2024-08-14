@@ -4,7 +4,13 @@
     <h2 class="card-title"><%= quiz.title %></h2>
     
     <p><%= quiz.description_preview %></p>
-    <p>Made by <%= quiz.user.username ? quiz.user.username : "Annonymous" %></p>
+    <p>Made by 
+      <% if current_user == quiz.user%>
+        <strong>You</strong>
+      <% else %>
+        <%= quiz.user.username ? quiz.user.username : "Annonymous" %>
+      <% end %>
+    </p>
 
     <div class="card-actions justify-between">
       <%= link_to("View", quiz, class: "btn btn-sm") %>
@@ -17,7 +23,7 @@
 
       <%= link_to("Leaderboard",  quiz_leaderboard_path(quiz), class: "btn btn-sm") %>
       <% if current_user == quiz.user%>
-        <button class="btn btn-sm">Edit</button>
+        <%= link_to "Edit", edit_quiz_path(quiz), class: "btn btn-sm" %>
       <% end %>
     </div>
 

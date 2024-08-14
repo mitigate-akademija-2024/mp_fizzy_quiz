@@ -7,7 +7,7 @@ class QuizzesController < ApplicationController
     if params[:user_id]
       @quizzes = Quiz.all.where(:user_id => params[:user_id])
     else
-      @quizzes = Quiz.all
+      @quizzes = Quiz.all.where(:quiz_type => :public)
     end
 
   end
@@ -19,6 +19,7 @@ class QuizzesController < ApplicationController
   # GET /quizzes/new
   def new
     @quiz = Quiz.new
+    @question = @quiz.questions.new
   end
 
   # GET /quizzes/1/edit
@@ -74,10 +75,6 @@ class QuizzesController < ApplicationController
 
   end
 
-  def user_answers
-    @user_answers = UserAnswer.where(user: current_user)
-  end
-
   private
 
     def leaderboard_csv(scores)
@@ -107,8 +104,6 @@ class QuizzesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def quiz_params
-
-      params.require(:quiz).permit(:user_id, :title, :description, :type)
-
+      params.require(:quiz).permit(:user_id, :title, :description, :quiz_type, questions_attributes: [ :id, :text, :question_type, answers_attributes: [ :text, :correct, :id] ])
     end
 end
