@@ -1,6 +1,28 @@
 <%= form_with(model: quiz) do |form| %>
+  
+  <% if quiz.errors.any? %>
+    <div role="alert" class="alert alert-error">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    <span>Error!
+    <% quiz.errors.each do |error| %>
+      <br><%= error.full_message %>
+    <% end %>
+    </span>
+  </div>
+
+  <% end %>
+  
   <div class="card-body">
-    
     <label class="input input-bordered flex items-center gap-2" for=<%= :title %> >
       Title
       <%= form.text_field :title, class: "grow", placeholder: "My Quiz Title" %>
@@ -13,6 +35,10 @@
 
     <%= form.select :quiz_type, 
       options_for_select(Quiz.quiz_types.keys.map { |type| [type.humanize, type] }, ), {}, 
+      class: "select select-bordered w-full max-w-xs" %>
+    
+    <%= form.select :published_type, 
+      options_for_select(Quiz.published_types.keys.map { |type| [type.humanize, type] }, ), {}, 
       class: "select select-bordered w-full max-w-xs" %>
   
   </div>

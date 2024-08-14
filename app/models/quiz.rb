@@ -1,6 +1,5 @@
 class Quiz < ApplicationRecord
   validates :title, presence: true, uniqueness: true
-
   belongs_to :user
 
   has_many :questions, dependent: :destroy
@@ -11,9 +10,10 @@ class Quiz < ApplicationRecord
   accepts_nested_attributes_for :questions, allow_destroy: true
 
   enum quiz_type: [ :private_quiz, :public_quiz, :restricted_quiz ]
+  enum published_type: [ :unpublished, :published ]
 
   def description_preview
-    max = 120
+    max = 60
     self.description.length > max ? "#{ self.description[0...max] }..." : self.description
   end
 
@@ -34,5 +34,4 @@ class Quiz < ApplicationRecord
       user_scores.order(total_score: :desc).first.total_score
     end
   end
-
 end

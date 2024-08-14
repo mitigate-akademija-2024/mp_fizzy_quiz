@@ -1,13 +1,15 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: [:edit, :destroy, :update, :create, :new]
+  before_action :authenticate_user!, only: [ :create, :new ]
+  before_action :authenticate_author!, only: [ :edit, :destroy, :update ]
+  before_action :user_scores_exist?, only: [ :edit, :update ]
 
   # GET /quizzes or /quizzes.json
   def index
     if params[:user_id]
       @quizzes = Quiz.all.where(:user_id => params[:user_id])
     else
-      @quizzes = Quiz.all.where(:quiz_type => :public)
+      @quizzes = Quiz.all.where(quiz_type: :public, published_type: :published)
     end
 
   end
@@ -95,6 +97,18 @@ class QuizzesController < ApplicationController
 
   private
 
+    def authenticate_author!
+      if current_user != @quiz.user
+        redirect_to quizzes_url, alert: "You do not have permissions to edit this quiz!"
+      end
+    end
+
+    def user_scores_exist?
+      if @quiz.user_scores_exist
+        redirect_to quizzes_url, error: "Quiz has allready been completed!"
+      end
+    end
+
     def leaderboard_csv(scores, flag = 0)
       require 'csv'
       filtered = []
@@ -135,6 +149,6 @@ class QuizzesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def quiz_params
-      params.require(:quiz).permit(:user_id, :title, :description, :quiz_type, questions_attributes: [ :id, :text, :question_type, answers_attributes: [ :text, :correct, :id] ])
+      params.require(:quiz).permit(:user_id, :title, :description, :quiz_type, :published_type, questions_attributes: [ :id, :text, :question_type, answers_attributes: [ :text, :correct, :id] ])
     end
 end
