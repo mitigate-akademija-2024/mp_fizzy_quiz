@@ -30,7 +30,7 @@ class QuizScoresController < ApplicationController
         end
 
         @questions.each do |question|
-            @total_correct += question.answers.count(:correct)
+            @total_correct += question.answers.count(correct: true)
         end
     end
 

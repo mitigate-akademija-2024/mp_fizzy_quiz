@@ -96,6 +96,31 @@ class QuizzesController < ApplicationController
       end
     end
 
+    def global_leaderboard
+      @user_scores_filtered = []
+      @users = User.all
+      @users.each do |user|
+        total_correct = user.user_answers.sum(:correct_count)
+          
+        @user_scores_filtered.append(
+          user: user,
+          total_correct: total_correct,
+          total_quizzes: user.user_answers.count
+        )
+      end
+
+      require 'csv'
+      attributes = %w{username total_correct total_quizzes}
+
+      CSV.generate(headers: true) do |csv|
+        csv << attributes
+
+        filtered.each do |score|
+          csv << score.values
+        end
+      end
+    end
+
     def leaderboard_csv(scores)
       require 'csv'
       filtered = []
