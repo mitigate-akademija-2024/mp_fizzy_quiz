@@ -15,7 +15,7 @@
     <div class="divider">Answers</div>
   </div>
 
-  <div class="card-body mt-4" data-controller="nested-form">
+  <div class="card-body mt-4" data-controller="nested-form" data-nested_form_wrapper_selector_value='.nested-form-wrapper'>
     <template data-nested-form-target="template">
       <%= form.fields_for :answers, Answer.new, child_index: 'NEW_RECORD' do |ff| %>
         <%= render "answers/form", form: ff %>
@@ -25,7 +25,6 @@
     <%= form.fields_for :answers do |ff| %>
       <%= render "answers/form", form: ff %>
     <% end %>
-
 
     <div data-nested-form-target="target"></div>
     <button type="button" data-action="nested-form#add">Add Answer</button>
