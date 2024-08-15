@@ -2,7 +2,8 @@
   
   <div class="flex-1">
     <%= link_to "All Quizzes",  quizzes_path, class: "btn btn-ghost text-xl" %>
-    
+    <%= link_to "Global Leaderboard",  leaderboard_path, class: "btn btn-ghost text-xl" %>
+
     <% unless current_user%>
       <%= link_to "Create a Quiz", new_quiz_path, class: "btn btn-ghost text-xl", disabled: "disabled" %>
     <% else %>

@@ -27,6 +27,7 @@
 
       <% if current_user == quiz.user%>
         <%= link_to "Edit", edit_quiz_path(quiz), class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" %>
+        <%= button_to "Delete",  quiz_path(quiz), method: :delete, data: {turbo_confirm: "Tiesam?"}, class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" %>
       <% end %>
   </div>
 </div>
