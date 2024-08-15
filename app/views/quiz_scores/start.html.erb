@@ -13,15 +13,11 @@
           <% question.answers.each do |answer|%>
             <div class="answers">
               <%= form.label "answers[#{question.id}][#{answer.id}]", answer.text %>
-              <% case question.question_type%>
-              <% when :multiple_choice %>
+              <% if question.question_type == "multiple_choice" %>
                 <%= form.check_box "answers[#{question.id}][#{answer.id}]" %>
-              <% when :single_choice %>
-                <%= form.radio_button "answers[#{question.id}][#{answer.id}]" %>
-              <% when :true_false %>
-                <p>Lmaoooo ripakss</p>
+              <% elsif question.question_type == "single_choice" %>
+                <%= form.radio_button "answers[#{question.id}][#{answer.id}]", "1" %>
               <% else %>
-                <%= form.check_box "answers[#{question.id}][#{answer.id}]" %>
               <% end %>
             </div>
           <% end %>
