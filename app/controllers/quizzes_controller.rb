@@ -77,7 +77,7 @@ class QuizzesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data leaderboard_csv( @scores ), filename: "quiz-#{Date.today}.csv" }
+      format.csv { send_data leaderboard_csv( @scores ), filename: "quiz-#{@quiz.id}-#{Date.today}.csv" }
     end
 
   end
