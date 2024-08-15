@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     get 'leaderboard', to: 'quizzes#leaderboard'
   end
   
+  get 'leaderboard', to: 'quizzes#global_leaderboard'
+
   resources :user do
     resources :quizzes, shallow: true
   end

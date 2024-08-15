@@ -82,6 +82,12 @@ class QuizzesController < ApplicationController
 
   end
 
+  def global_leaderboard
+    respond_to do |format|
+      format.csv { send_data gleaderboar_csv, filename: "global-#{Date.today}.csv" }
+    end
+  end
+
   private
 
     def authenticate_author!
@@ -96,16 +102,19 @@ class QuizzesController < ApplicationController
       end
     end
 
-    def global_leaderboard
+    def gleaderboar_csv
       @user_scores_filtered = []
       @users = User.all
-      @users.each do |user|
-        total_correct = user.user_answers.sum(:correct_count)
-          
+
+      ordered = UserScore.group(:user_id).select('SUM(correct_count) as total_score, user_id').order('total_score desc')
+
+      ordered.each do |user|  
+        username = User.find(user.user_id).username
+        username = username ? username : "Anon"
         @user_scores_filtered.append(
-          user: user,
-          total_correct: total_correct,
-          total_quizzes: user.user_answers.count
+          user: username,
+          total_correct: user.total_score,
+          total_quizzes: User.find(user.user_id).user_scores.count
         )
       end
 
@@ -115,7 +124,7 @@ class QuizzesController < ApplicationController
       CSV.generate(headers: true) do |csv|
         csv << attributes
 
-        filtered.each do |score|
+        @user_scores_filtered.each do |score|
           csv << score.values
         end
       end
