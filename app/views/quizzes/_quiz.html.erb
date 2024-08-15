@@ -1,8 +1,8 @@
 <div class="card card-normal bg-base-100 shadow-xl w-1/3 mx-auto">
   <div class="card-body">
     <h1 class="card-title mx-auto text-2xl">Title: <%= quiz.title %></h1>
-    <div class="pb-2">
-      <p>Description: <%= quiz.description %></p>
+    <div class="pb-2 w-1/3">
+      <p>Description:<br> <%= quiz.description %></p>
       <p>Made by <%= quiz.user.username ? quiz.user.username : "Annonymous" %></p>
       <p>Created on: <%= format_date quiz.created_at%></p>
       <p>Last Edited: <%= quiz.updated_at == quiz.created_at ? "-" : format_date(quiz.updated_at) %></p>
@@ -13,11 +13,10 @@
       <p>Total questions: <%= quiz.questions.count %></p>
       <p>Total completions: <%= quiz.completed %></p>
       <p>Max correct answers achieved: <%= quiz.max_correct_answers %></p>
-      <p>Max score answers achieved: <%= quiz.max_score ? quiz.max_score : "Not Scored"%></p>
     </div>
   </div>
   <div class="card-actions justify-around pb-4">      
-      <% unless current_user%>
+      <% if current_user == quiz.user %>
         <%= link_to("Start", quiz_start_path(quiz), class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg", disabled: "disabled") %>
       <% else %>
         <%= link_to("Start", quiz_start_path(quiz), class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg") %>

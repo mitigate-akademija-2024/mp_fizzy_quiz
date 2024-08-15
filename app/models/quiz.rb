@@ -12,7 +12,7 @@ class Quiz < ApplicationRecord
   enum published_type: { unpublished: 0, published: 1 }
 
   def description_preview
-    max = 60
+    max = 57
     self.description.length > max ? "#{ self.description[0...max] }..." : self.description
   end
 

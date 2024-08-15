@@ -8,4 +8,7 @@ class User < ApplicationRecord
   has_many :user_answers, dependent: :destroy
   has_many :user_scores, dependent: :destroy
   has_many :quiz_comments, dependent: :destroy
+
+  accepts_nested_attributes_for :quizzes, allow_destroy: true
+
 end
