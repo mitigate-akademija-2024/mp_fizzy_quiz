@@ -28,9 +28,15 @@ class QuizScoresController < ApplicationController
                 user_answers: clean_user_answers 
             )
         end
-
+        @total_correct = 0
         @questions.each do |question|
-            @total_correct += question.answers.count(correct: true)
+            question.answers.each do |ans|
+                if ans.correct
+                    @total_correct += 1
+                end
+            end
+
+
         end
     end
 

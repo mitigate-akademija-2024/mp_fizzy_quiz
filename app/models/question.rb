@@ -1,7 +1,7 @@
 class Question < ApplicationRecord
     validates :text, presence: true
-    validate :has_correct_answer
     validate :single_choice_answers_count
+    validate :has_correct_answer
     belongs_to :quiz
     
     has_many :answers, dependent: :destroy
@@ -21,15 +21,15 @@ class Question < ApplicationRecord
     end
 
     def single_choice_answers_count
-
+        puts "Banana"
         answer_values = []
         self.answers.each do |answer|
             if answer.correct
                 answer_values.append(answer.correct)
             end
         end
-
-        if (self.question_type == :single_choice) && (answer_values.count != 1)
+        puts self.question_type
+        if (self.question_type == "single_choice") && (answer_values.count != 1)
             errors.add(:base, "Single Choice questions, can't have more than 1 correct answer!")
         end
     end
