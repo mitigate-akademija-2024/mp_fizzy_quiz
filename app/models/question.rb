@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
     validates :text, presence: true
+    validate :single_choice_answers_count
     validate :has_correct_answer
     belongs_to :quiz
     
