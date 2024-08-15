@@ -83,8 +83,11 @@ class QuizzesController < ApplicationController
   end
 
   def global_leaderboard
+    @ordered = UserScore.group(:user_id).select('SUM(correct_count) as total_score, user_id').order('total_score desc')
+
     respond_to do |format|
-      format.csv { send_data gleaderboar_csv, filename: "global-#{Date.today}.csv" }
+      format.html
+      format.csv { send_data gleaderboar_csv(@ordered), filename: "global-#{Date.today}.csv" }
     end
   end
 
@@ -102,11 +105,8 @@ class QuizzesController < ApplicationController
       end
     end
 
-    def gleaderboar_csv
-      @user_scores_filtered = []
-      @users = User.all
-
-      ordered = UserScore.group(:user_id).select('SUM(correct_count) as total_score, user_id').order('total_score desc')
+    def gleaderboar_csv(ordered)
+      @user_scores_filtered = []      
 
       ordered.each do |user|  
         username = User.find(user.user_id).username

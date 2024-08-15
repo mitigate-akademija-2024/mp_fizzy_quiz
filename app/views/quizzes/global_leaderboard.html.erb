@@ -1,0 +1,28 @@
+<%= link_to "Download as CSV",  leaderboard_path(format: 'csv'), class: "btn" %>
+<table id="leaderboard" class="divide-y divide-gray-200">
+    <thead class="text-left">
+      <tr>
+        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">User</th>
+        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Total Score</th>
+        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Total Quizzes</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+
+      <% @ordered.each do |entry|%>
+      
+          <tr>
+            <% if current_user != User.find(entry.user_id) %>
+              <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= User.find(entry.user_id).username ? User.find(entry.user_id).username : "Anonymous User" %></th>
+            <% else %>
+              <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><strong>You</strong></th>
+            <% end %>
+            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= entry.total_score %></th>
+            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= User.find(entry.user_id).user_scores.count %></th>
+          </tr>
+
+      
+      <% end %>
+
+    </tbody>
+</table>
